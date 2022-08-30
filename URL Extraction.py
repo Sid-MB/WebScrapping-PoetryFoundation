@@ -13,13 +13,15 @@ from selenium.common.exceptions import TimeoutException
 from multiprocessing import Pool
 import time
 
-total_pages     = 10
-links_per_page  = 20
+# Total number of pages we want to extract in a single file
+total_pages = 10
+links_per_page = 20
 
 def UrlExtract(batch_number):
     #Setting up the browser
-    path = r"C:\\Users\\divyb\\OneDrive\\Desktop\\chromedriver.exe" #Path for my Chrome driver.
-    driver = webdriver.Chrome(executable_path = path) # Setting up the browser with selenium.
+    # Path for my Chrome driver.
+    path = r"/Users/sid/Downloads/edgedriver_mac64/msedgedriver"
+    driver = webdriver.Edge(executable_path = path) # Setting up the browser with selenium.
 
 
 
@@ -54,15 +56,13 @@ def main():
     #Dividing the task in batches so that its faster with multiprocessing.
     # That is 11 batches of size 200 per page are required to get all the poem urls
 
-    total_pages    = 10 # Total number of pages we want to extract in a single file, each page consists of 20 poem links.
-    links_per_page = 20 # After inspecting the webpage element.
-    total_batches  = 5 # Number of times we want to do the operation.
-    start_batch_from = 0 # Because sometimes, I run the program for a small number of batches first.
+    total_batches  = 12 # Number of times we want to do the operation.
+    start_batch_from = 5 # Because sometimes, I run the program for a small number of batches first.
     batch_iterable = list(range(start_batch_from,total_batches+start_batch_from))
 
     #multiprocessing with pool.
     print("start")
-    p = Pool(processes = 3)
+    p = Pool(processes = 6)
     p.map(UrlExtract,batch_iterable)
     p.terminate()
     print("end")
